@@ -46,13 +46,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
+        # uses: appleboy/ssh-action@master
+        # with:
+        #   host: ${{ secrets.HOSTNAME  }}
+        #   username: ${{ secrets.USER_NAME  }}
+        #   key: ${{ secrets.AWS_PRIVATE_KEY  }}
+        #   port: 22
+        #   script: |
+        uses: easingthemes/ssh-deploy@main
         with:
-          host: ${{ secrets.HOSTNAME  }}
-          username: ${{ secrets.USER_NAME  }}
-          key: ${{ secrets.AWS_PRIVATE_KEY  }}
-          port: 22
-          script: |
+          SSH_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.HOSTNAME }}
+          REMOTE_USER: ${{ secrets.USER_NAME }}
+          SCRIPT_AFTER: |
             sudo docker rm -f fastapi 
             sudo docker rmi $dockerhub_id/$dockerhub_repo:latest
             sleep 10 
