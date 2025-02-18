@@ -34,6 +34,7 @@ jobs:
           sleep 10
           docker login -u "${{ secrets.REGISTRY_USER }}" -p "${{ secrets.REGISTRY_PASSWD }}"
           docker push jhocan55/fast-api:${GITHUB_SHA}
+          sleep 1
           docker push jhocan55/fast-api:latest
 
   deploy:
