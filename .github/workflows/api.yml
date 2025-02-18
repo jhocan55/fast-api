@@ -32,7 +32,7 @@ jobs:
           docker images
           docker run -d -p 80:80 --name fastapi jhocan55/fast-api:${GITHUB_SHA}
           sleep 10
-          docker login -u ${{ secrets.REGISTRY_USER  }} -p ${{ secrets.REGISTRY_PASSWD  }}
+          docker login -u "${{ secrets.REGISTRY_USER }}" -p "${{ secrets.REGISTRY_PASSWD }}"
           docker push jhocan55/fast-api:${GITHUB_SHA}
           docker push jhocan55/fast-api:latest
 
@@ -50,9 +50,9 @@ jobs:
           port: 22 
           script: |
             sudo docker rm -f fastapi 
-            sudo docker rmi benjaminfiche77/fast-api:latest
+            sudo docker rmi jhocan55/fast-api:latest
             sleep 10 
-            sudo docker run -d -p 9000:80 --name fastapi benjaminfiche77/fast-api:latest
+            sudo docker run -d -p 9000:80 --name fastapi jhocan55/fast-api:latest
             sudo docker ps 
             sleep 10 
             curl localhost:9000
